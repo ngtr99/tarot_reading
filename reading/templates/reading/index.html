@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Tarot Reading</title>
+</head>
+<body>
+    <video autoplay muted loop class="background-video">
+        <source src="{% static 'reading.mp4' %}" type="video/mp4">
+    </video>
+
+    <h1>Tarot Reading</h1>
+    <div class="catalog">
+        <button onclick="location.href='{% url 'career' %}'">Career</button>
+        <button onclick="location.href='{% url 'love' %}'">Love</button>
+        <button onclick="location.href='{% url 'finance' %}'">Finance</button>
+        <button onclick="location.href='{% url 'health' %}'">Health</button>
+    </div>   
+    
+
+
+    <div class="calendar-container">   
+        <h2 >Booking Calendar</h2>
+            <div class ="display-date-container">
+                <button onclick="prevMonth()" class="selectMonth-btn">&#8592; Prev</button>
+                <span id="month-year" class="month-year"></span>
+                <button onclick="nextMonth()" class="selectMonth-btn">Next &#8594;</button>
+            </div>
+            <div id="calendar" class="calendar"></div>
+            <div class="time-slot">
+                <label for="start-time">Start Time:</label>
+                <input type="time" id="start-time">
+                <label for="end-time">End Time:</label>
+                <input type="time" id="end-time">
+            </div>
+            <button class="appointment-button" onclick="createAppointment()">Create Appointment</button>
+    </div>
+
+    <script>
+    // Create calendar
+    const calendar = document.getElementById("calendar");
+    const monthYear = document.getElementById("month-year");
+    let selectedDates = new Set();
+    let currentDate = new Date();
+    
+    
+    function updateCalendar() {
+        calendar.innerHTML = "";
+        let daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+        monthYear.textContent = currentDate.toLocaleString('default', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+        
+        for (let i = 1; i <= daysInMonth; i++) {
+            const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
+            const day = document.createElement("div");
+            day.classList.add("day");
+            day.textContent = `${date.toLocaleString('default', { weekday: 'short' })} ${i}`;
+            day.addEventListener("click", () => toggleBooking(i, day));
+            calendar.appendChild(day);
+        }
+    }
+    
+    function toggleBooking(day, element) {
+        if (selectedDates.has(day)) {
+            selectedDates.delete(day);
+            element.classList.remove("selected");
+        } else {
+            selectedDates.add(day);
+            element.classList.add("selected");
+        }
+    }
+    
+    function createAppointment() {
+        const startTime = document.getElementById("start-time").value;
+        const endTime = document.getElementById("end-time").value;
+        
+        if (selectedDates.size === 0 || !startTime || !endTime) {
+            alert("Please select a date and time before creating an appointment.");
+            return;
+        }
+        
+        // Format the appointment details
+        const appointmentDetails = `Appointment on ${[...selectedDates].map(day => `${new Date(currentDate.getFullYear(), currentDate.getMonth(), day).toLocaleString('default', { weekday: 'long', day: 'numeric', month: 'long' })}`).join(", ")} from ${startTime} to ${endTime}`;
+    
+        // Create a mailto link
+        const emailBody = encodeURIComponent(`I would like to schedule an appointment: ${appointmentDetails}`);
+        const emailSubject = encodeURIComponent('New Appointment Booking');
+        const emailTo = "minhnguyet12923@gmail.com";
+        
+        const mailtoLink = `mailto:${emailTo}?subject=${emailSubject}&body=${emailBody}`;
+        
+        // Open the email client with the pre-filled details
+        window.location.href = mailtoLink;
+    }
+    
+    function prevMonth() {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        updateCalendar();
+    }
+    
+    function nextMonth() {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        updateCalendar();
+    }
+    
+    updateCalendar();
+    </script>
+</body>
+</html>

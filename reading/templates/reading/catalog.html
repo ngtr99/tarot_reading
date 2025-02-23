@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'catalog.css' %}">
+    <title>Tarot Card {{content}}</title>
+</head>
+<body>
+    <h1>Tarot Card {{content}}</h1>
+    <p class="direction">Let get a card and exploire it</p>
+
+    <div class="tarot-card" id="tarot-cards-container">
+        {% for card in catalog %}
+        <div class="card-item">
+            <div class="front">
+                <a href="{% url 'reading' slug1=content slug2=card.tarot_card.name %}">
+                    <img src="{% static 'images/tarot.png' %}" alt="{{ card.tarot_card.name }}" class="card" id="{{ card.description }}">
+                </a>                             
+            </div>
+    
+            <div class="back" style="display: none;">
+                <img src="{% static card.tarot_card.image %}" alt="{{ card.tarot_card.name }}" class="card" id="{{ card.description }}">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    
+    <button onclick="location.href='{% url 'index' %}'">Back</button>
+</body>
+</html>

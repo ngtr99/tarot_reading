@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'reading.css' %}">
+    <title>Tarot Card {{content}}</title>
+</head>
+<body>
+    <h1>Tarot Card {{content}}</h1>
+
+<div id="card-description">
+    <h2 id="card-name">{{card.tarot_card.name}}</h2>
+    <img src="{% static card.tarot_card.image %}" id="card-image">
+    <p id="card-meaning">{{card.description}}</p>
+</div>
+
+
+
+<button onclick="location.href='{% url 'index' %}'">Back</button>
+</body>
+</html>
