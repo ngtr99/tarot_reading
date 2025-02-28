@@ -9,9 +9,16 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from os import path
 from pathlib import Path
+
+# settings.py
+from dotenv import load_dotenv
+
+# Load environment variables from a .env file
+load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,8 +33,7 @@ SECRET_KEY = 'django-insecure-is)@xt@2%uy4srl7in$5_9rm@h!^=w#cl6#*4%*5yqbml!+ofs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
 
 # Application definition
 
@@ -79,10 +85,15 @@ WSGI_APPLICATION = 'tarot_reading.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
+
 
 
 # Password validation
@@ -124,7 +135,10 @@ STATIC_URL = 'reading/static/reading/'
 
 STATICFILES_DIRS = [
     path.join(BASE_DIR, STATIC_URL),
+    path.join(BASE_DIR, 'static'),
 ] 
+
+STATIC_ROOT = path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -141,3 +155,4 @@ CACHES = {
         'LOCATION': '/tmp/django_cache',
     }
 }
+
