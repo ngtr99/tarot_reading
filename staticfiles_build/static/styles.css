@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+ 
+ body {
+    margin:0%;
+    color: white;
+    text-align: center;
+} 
+
+h1 {
+    font-family: "Pacifico", serif;
+}
+
+h2 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+button {
+    background-color: #4f50ae;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    z-index: -90;
+}
+
+.catalog {
+    max-width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+/*Calendar*/
+/*class*/
+.calendar-container {
+    max-width: 90%;
+    margin: 10px auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.display-date-container {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Add space between buttons */
+    gap: 10px; /* Adjust this gap to control space between elements */
+}
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+.selectMonth-btn {
+    margin: auto;
+    font-size: 15px;
+}
+.day {
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+.booked {
+    background-color: #697427;
+    color: white;
+}
+.selected {
+    background-color: #303d85;
+}
+.time-slot {
+    margin-top: 10px;
+}
+.appointment-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #353397;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
