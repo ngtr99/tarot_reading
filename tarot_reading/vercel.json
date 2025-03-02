@@ -1,13 +1,25 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "tarot_reading/wsgi.py",
-            "use": "@vercel/python",
-            "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+    "builds": [{
+        "src": "build_files.sh",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "staticfiles_build"
         }
+      },
+      {
+        "src": "/tarot_reading/wsgi.py",
+        "use": "@vercel/python",
+        "config": { "maxLambdaSize": "15mb" }
+      }
     ],
     "routes": [
-         { "src": "/(.*)", "dest": "tarot_reading/wsgi.py" }
+      {
+        "src": "/(.*)",
+        "dest": "tarot_reading/wsgi.py"
+      },
+      {
+        "src": "/static/(.*)",
+        "dest": "/static/$1"
+      }
     ]
 }
