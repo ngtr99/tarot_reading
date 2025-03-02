@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('tarot-reading-two.vercel.app/', views.index, name='index'),
     path('career/', views.career, name='career'),
     path('love/', views.love, name='love'),
     path('health/', views.health, name='health'),
