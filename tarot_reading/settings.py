@@ -103,6 +103,7 @@ DATABASES = {
 }
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -142,7 +143,10 @@ STATIC_URL = 'reading/static/reading/'
 
 STATICFILES_DIRS = [
     path.join(BASE_DIR, STATIC_URL),
+    path.join(BASE_DIR, 'static'),
 ] 
+
+STATIC_ROOT = path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
