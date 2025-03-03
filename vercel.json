@@ -1,0 +1,5 @@
+{
+    "buildCommand": "sh build.sh",
+    "devCommand": "python manage.py runserver",
+    "outputDirectory": "build"
+}
