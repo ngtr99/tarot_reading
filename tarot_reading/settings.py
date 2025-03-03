@@ -9,31 +9,40 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+
+from os import path, environ
 import os
-from os import path
 from pathlib import Path
-
-# settings.py
-from dotenv import load_dotenv
-
-# Load environment variables from a .env file
-load_dotenv()
-
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+environ.Env.read_env(path.join(BASE_DIR, '.env.local'))
+if not path.exists(path.join(BASE_DIR, '.env.local')):
+    # If .env.local doesn't exist, fallback to os.environ (Vercel env vars)
+    env = environ.Env(**os.environ)
+
+
+
+
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = 'django-insecure-is)@xt@2%uy4srl7in$5_9rm@h!^=w#cl6#*4%*5yqbml!+ofs'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = 'True'
+
+ALLOWED_HOSTS = ["vercel.app", 'localhost','127.0.0.1']
+
 
 # Application definition
 
@@ -86,11 +95,10 @@ WSGI_APPLICATION = 'tarot_reading.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("DB_NAME"),
-        'USER': os.environ.get("DB_USER"),
-        'PASSWORD': os.environ.get("DB_PASSWORD"),
-        'HOST': os.environ.get("DB_HOST"),
-        'PORT': os.environ.get("DB_PORT"),
+        'NAME': env('POSTGRES_DATABASE'),
+        'USER': env('POSTGRES_USER'),
+        "PASSWORD": env('POSTGRES_PASSWORD'),
+        "HOST": env('POSTGRES_HOST'),
     }
 }
 
@@ -155,4 +163,5 @@ CACHES = {
         'LOCATION': '/tmp/django_cache',
     }
 }
+
 
