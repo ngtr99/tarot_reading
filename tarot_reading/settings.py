@@ -22,10 +22,10 @@ env = environ.Env()
 environ.Env.read_env(path.join(BASE_DIR, '.env.local'))
 if not path.exists(path.join(BASE_DIR, '.env.local')):
     # If .env.local doesn't exist, fallback to os.environ (Vercel env vars)
-    env = environ.Env(**os.environ)
+    env.ENVIRON.update(os.environ)
 
 
-
+print("env", env("PGDATABASE")) 
 
 
 
